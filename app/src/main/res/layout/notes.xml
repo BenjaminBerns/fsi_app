@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".notes">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="360dp"
+            android:layout_height="1100dp"
+            android:background="@drawable/p2">
+
+
+            <TextView
+                android:id="@+id/editText1.1"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="217dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText1.2"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="275dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText1.3"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="337dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText1.4"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="400dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText1.5"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="460dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <Button
+                android:id="@+id/btnb2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="127dp"
+                android:background="@drawable/form"
+                android:text="X" />
+
+            <Button
+                android:id="@+id/deconnexion2"
+                android:layout_width="282dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="39dp"
+                android:layout_marginTop="1025dp"
+                android:layout_marginEnd="39dp"
+                android:background="@drawable/gradient"
+                android:backgroundTint="#4EA459"
+                android:fontFamily="sans-serif"
+                android:text="Déconnexion"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/dateTitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="230dp"
+                android:text="Date :" />
+
+            <TextView
+                android:id="@+id/noteTitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="290dp"
+                android:text="Note :" />
+
+            <TextView
+                android:id="@+id/noteDossTitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="351dp"
+                android:text="Note de dossier :" />
+
+            <TextView
+                android:id="@+id/oralTitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="412dp"
+                android:text="Oral :" />
+
+            <TextView
+                android:id="@+id/remarquesTitre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="472dp"
+                android:text="Remarques :" />
+
+            <TextView
+                android:id="@+id/editText2.1"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="670dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText2.2"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="730dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText2.3"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="792dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText2.4"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="853dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/editText2.5"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="915dp"
+                android:layout_marginEnd="78dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="text"
+                android:inputType="text"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/dateTitre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="685dp"
+                android:text="Date :" />
+
+            <TextView
+                android:id="@+id/noteTitre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="745dp"
+                android:text="Note :" />
+
+            <TextView
+                android:id="@+id/noteDossTitre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="805dp"
+                android:text="Note de dossier :" />
+
+            <TextView
+                android:id="@+id/oralTitre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="868dp"
+                android:text="Oral :" />
+
+            <TextView
+                android:id="@+id/remarquesTitre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="75dp"
+                android:layout_marginTop="928dp"
+                android:text="Remarques :" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>
