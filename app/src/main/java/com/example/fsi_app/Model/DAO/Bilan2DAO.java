@@ -26,10 +26,10 @@ public class Bilan2DAO {
         long dateBil2 = cursor.getLong(1);
         Date date_Bil2 = new Date(dateBil2);
         unBilan2.setDate_bil2(date_Bil2);
-        unBilan2.setNote_ent_bil2(cursor.getString(2));
-        unBilan2.setNote_doss_bil2(cursor.getString(3));
-        unBilan2.setOral_bil2(cursor.getString(4));
-        unBilan2.setRemarques_bil2(cursor.getString(5));
+        unBilan2.setNote_doss_bil2(cursor.getInt(2));
+        unBilan2.setNote_oral_bil2(cursor.getDouble(3));
+        unBilan2.setRemarques_bil2(cursor.getString(4));
+        unBilan2.setSujet_analyse_bil2(cursor.getString(5));
         int etudiant = cursor.getInt(6);
         unBilan2.setEtuit(etuitDAO.getByIdEtudiant(etudiant));
         return unBilan2;
@@ -44,7 +44,7 @@ public class Bilan2DAO {
 
     public ArrayList<Bilan2s> getAllBilan2(){
         ArrayList<Bilan2s> listBilan2 = new ArrayList<>();
-        Cursor curseur = database.query(true, "bilan2",  new String[]{"id", "date_bil2", "note_ent_bil2", "note_doss_bil2", "oral_bil2", "remarques_bil2", "id_etu"},
+        Cursor curseur = database.query(true, "bilan2s",  new String[]{"id", "date_bil2", "note_doss_bil2", "note_oral_bil2", "remarques_bil2", "sujet_analyse_bil2", "id_etu"},
                 null, null, null, null, null, null);
         while(curseur.moveToNext()){
             Bilan2s unBilan2 = cursorToBilan2s(curseur);
@@ -57,8 +57,8 @@ public class Bilan2DAO {
 
     public Bilan2s getByIdBilan2(int id){
         Bilan2s unBilan2 = null;
-        Cursor curseur = database.query(true, "Bilan2", new String[]{"id", "date_bil2", "note_ent_bil2", "note_doss_bil2", "oral_bil2", "remarques_bil2", "id_etu"},
-                "id_etu = " + id, null, null, null, null, null);
+        Cursor curseur = database.query(true, "Bilan2s", new String[]{"id", "date_bil2", "note_doss_bil2", "note_oral_bil2", "remarques_bil2", "sujet_analyse_bil2", "id_etu"},
+                "id = " + id, null, null, null, null, null);
         while (curseur.moveToNext()){
             unBilan2 = cursorToBilan2s(curseur);
         }
@@ -68,12 +68,12 @@ public class Bilan2DAO {
     public Bilan2s insertBilan2(Bilan2s unBilan2){
         ContentValues value = new ContentValues();
         value.put("date_bil2", unBilan2.getDate_bil2().getTime());
-        value.put("note_ent_bil2", unBilan2.getNote_ent_bil2());
         value.put("note_doss_bil2", unBilan2.getNote_doss_bil2());
-        value.put("note_oral_bil2", unBilan2.getOral_bil2());
+        value.put("note_oral_bil2", unBilan2.getNote_oral_bil2());
         value.put("remarques_bil2", unBilan2.getRemarques_bil2());
+        value.put( "sujet_analyse_bil2", unBilan2.getSujet_analyse_bil2());
         value.put("id_etu", unBilan2.getEtuit().getId());
-        int id = (int) database.insert("bilan2", null, value);
+        int id = (int) database.insert("bilan2s", null, value);
         unBilan2.setId(id);
 
         return unBilan2;
@@ -81,7 +81,10 @@ public class Bilan2DAO {
 
     public void deleteBilan2(Bilan2s unBilan2){
         int id = unBilan2.getId();
-        database.delete(MySQLiteHelper.TABLE_ETUDIANT, "id = "+id, null);
+        database.delete(MySQLiteHelper.TABLE_BILAN2, "id = "+id, null);
     }
-
+    public void remiseAZero() {
+        // Réinitialiser le compteur d'auto-incrémentation
+        database.execSQL("DELETE FROM sqlite_sequence WHERE name='bilan2s';");
+    }
 }

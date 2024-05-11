@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.fsi_app.Model.BO.Bilan1s;
+import com.example.fsi_app.Model.BO.Etudiants;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,10 +32,11 @@ public class Bilan1DAO {
 
         unBilan1.setNote_ent_bil1(cursor.getInt(2));
         unBilan1.setNote_doss_bil1(cursor.getInt(3));
-        unBilan1.setOral_bil1(cursor.getInt(4));
+        unBilan1.setNote_oral_bil1(cursor.getInt(4));
         unBilan1.setRemarques_bil1(cursor.getString(5));
         int etudiant = cursor.getInt(6);
-        unBilan1.setEtuit(etuitDAO.getByIdEtudiant(etudiant));
+        Etudiants etu = etuitDAO.getByIdEtudiant(etudiant);
+        unBilan1.setEtuit(etu);
         return unBilan1;
     }
     public void open() throws SQLException {
@@ -46,7 +48,7 @@ public class Bilan1DAO {
 
     public ArrayList<Bilan1s> getAllBilan1(){
         ArrayList<Bilan1s> listBilan1 = new ArrayList<>();
-        Cursor curseur = database.query(true, "bilan1",  new String[]{"id", "date_bil1", "note_ent_bil1", "note_doss_bil1", "note_oral_bil1", "remarques_bil1", "id_etu"},
+        Cursor curseur = database.query(true, "bilan1s",  new String[]{"id", "date_bil1", "note_ent_bil1", "note_doss_bil1", "note_oral_bil1", "remarques_bil1", "id_etu"},
                 null, null, null, null, null, null);
         while(curseur.moveToNext()){
             Bilan1s unBilan1 = cursorToBilan1s(curseur);
@@ -59,12 +61,13 @@ public class Bilan1DAO {
 
     public Bilan1s getByIdBilan1(int id){
         Bilan1s unBilan1 = null;
-        Cursor curseur = database.query(true, "Bilan1", new String[]{"id", "date_bil1", "note_ent_bil1", "note_doss_bil1", "note_oral_bil1", "remarques_bil1", "id_etu"},
-                "id_etu = " + id, null, null, null, null, null);
+        Cursor curseur = database.query(true, "bilan1s", new String[]{"id", "date_bil1","note_ent_bil1", "note_doss_bil1", "note_oral_bil1", "remarques_bil1", "id_etu"},
+                "id_etu = ?", new String[]{String.valueOf(id)}, null, null, null, null);
         while (curseur.moveToNext()){
             unBilan1 = cursorToBilan1s(curseur);
         }
         curseur.close();
+
         return unBilan1;
     }
     public Bilan1s insertBilan1(Bilan1s unBilan1){
@@ -72,10 +75,10 @@ public class Bilan1DAO {
         value.put("date_bil1", unBilan1.getDate_bil1().getTime());
         value.put("note_ent_bil1", unBilan1.getNote_ent_bil1());
         value.put("note_doss_bil1", unBilan1.getNote_doss_bil1());
-        value.put("note_oral_bil1", unBilan1.getOral_bil1());
+        value.put("note_oral_bil1", unBilan1.getNote_oral_bil1());
         value.put("remarques_bil1", unBilan1.getRemarques_bil1());
         value.put("id_etu", unBilan1.getEtuit().getId());
-        int id = (int) database.insert("bilan1", null, value);
+        int id = (int) database.insert("bilan1s", null, value);
         unBilan1.setId(id);
 
         return unBilan1;
@@ -83,6 +86,10 @@ public class Bilan1DAO {
 
     public void deleteBilan1(Bilan1s unBilan1){
         int id = unBilan1.getId();
-        database.delete(MySQLiteHelper.TABLE_ETUDIANT, "id = "+id, null);
+        database.delete(MySQLiteHelper.TABLE_BILAN1, "id = "+id, null);
+    }
+    public void remiseAZero() {
+        // Réinitialiser le compteur d'auto-incrémentation
+        database.execSQL("DELETE FROM sqlite_sequence WHERE name='bilan1s';");
     }
 }

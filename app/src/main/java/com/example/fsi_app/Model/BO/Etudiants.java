@@ -5,21 +5,24 @@ public class Etudiants {
     private String nom_etu;
     private String pre_etu;
     private String mail_etu;
-    private String adresse;
+    private String adresse_etu;
     private String tel_etu;
     private String spe_etu;
     private String username_etu;
-    private String pass_etu;
     private String ville_etu;
     private String cp_etu;
     private String nom_entreprise_etu;
-    private String info_etu;
+    private String infos_etu;
     private String classe_etu;
-    private String nom_maitre_apprentissage_etu;
+    private String nom_maitre_apprenti;
     private String nom_tuteur_etu;
 
-    public String getAdresse() {
-        return adresse;
+    public String getAdresse_etu() {
+        return adresse_etu;
+    }
+
+    public void setAdresse_etu(String adresse_etu) {
+        this.adresse_etu = adresse_etu;
     }
 
     public String getVille_etu() {
@@ -38,16 +41,12 @@ public class Etudiants {
         this.cp_etu = cp_etu;
     }
 
-    public String getInfo_etu() {
-        return info_etu;
+    public String getInfos_etu() {
+        return infos_etu;
     }
 
-    public void setInfo_etu(String info_etu) {
-        this.info_etu = info_etu;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setInfos_etu(String infos_etu) {
+        this.infos_etu = infos_etu;
     }
 
     public int getId() {
@@ -106,14 +105,6 @@ public class Etudiants {
         this.username_etu = username_etu;
     }
 
-    public String getPass_etu() {
-        return pass_etu;
-    }
-
-    public void setPass_etu(String pass_etu) {
-        this.pass_etu = pass_etu;
-    }
-
     public String getNom_entreprise_etu() {
         return nom_entreprise_etu;
     }
@@ -130,12 +121,13 @@ public class Etudiants {
         this.classe_etu = classe_etu;
     }
 
-    public String getNom_maitre_apprentissage_etu() {
-        return nom_maitre_apprentissage_etu;
+
+    public String getNom_maitre_apprenti() {
+        return nom_maitre_apprenti;
     }
 
-    public void setNom_maitre_apprentissage_etu(String nom_maitre_apprentissage_etu) {
-        this.nom_maitre_apprentissage_etu = nom_maitre_apprentissage_etu;
+    public void setNom_maitre_apprenti(String nom_maitre_apprenti) {
+        this.nom_maitre_apprenti = nom_maitre_apprenti;
     }
 
     public String getNom_tuteur_etu() {
@@ -146,22 +138,21 @@ public class Etudiants {
         this.nom_tuteur_etu = nom_tuteur_etu;
     }
 
-    public Etudiants(int id, String nom_etu, String pre_etu, String mail_etu, String adresse, String tel_etu, String spe_etu, String username_etu, String pass_etu, String ville_etu, String cp_etu, String nom_entreprise_etu, String info_etu, String classe_etu, String nom_maitre_apprentissage_etu, String nom_tuteur_etu) {
+    public Etudiants(int id, String nom_etu, String pre_etu, String mail_etu, String adresse_etu, String tel_etu, String spe_etu, String username_etu, String ville_etu, String cp_etu, String nom_entreprise_etu, String infos_etu, String classe_etu, String nom_maitre_apprenti, String nom_tuteur_etu) {
         this.id = id;
         this.nom_etu = nom_etu;
         this.pre_etu = pre_etu;
         this.mail_etu = mail_etu;
-        this.adresse = adresse;
+        this.adresse_etu = adresse_etu;
         this.tel_etu = tel_etu;
         this.spe_etu = spe_etu;
         this.username_etu = username_etu;
-        this.pass_etu = pass_etu;
         this.ville_etu = ville_etu;
         this.cp_etu = cp_etu;
         this.nom_entreprise_etu = nom_entreprise_etu;
-        this.info_etu = info_etu;
+        this.infos_etu = infos_etu;
         this.classe_etu = classe_etu;
-        this.nom_maitre_apprentissage_etu = nom_maitre_apprentissage_etu;
+        this.nom_maitre_apprenti = nom_maitre_apprenti;
         this.nom_tuteur_etu = nom_tuteur_etu;
     }
 

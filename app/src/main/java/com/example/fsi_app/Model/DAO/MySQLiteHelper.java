@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class MySQLiteHelper extends SQLiteOpenHelper{
         private static final String DATABASE_NAME = "dbs12374824";
-        private static final int DATABASE_VERSION = 6;
+        private static final int DATABASE_VERSION = 7;
         public static final String TABLE_ETUDIANT = "etudiants";
         public static final String TABLE_BILAN1 = "bilan1s";
         public static final String TABLE_BILAN2 = "bilan2s";
@@ -20,7 +20,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 "username_etu text, pass_etu text, " +
                 "nom_entreprise_etu text, " +
                 "nom_tuteur_etu text," +
-                "nom_maitre_apprentissage_etu text," +
+                "nom_maitre_apprenti text," +
                 "classe_etu text)";
         private static final String DATABASE_CREATE_BILAN1 = "CREATE TABLE IF NOT EXISTS " +
                 TABLE_BILAN1 + "( id integer primary key autoincrement, " +

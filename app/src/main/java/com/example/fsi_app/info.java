@@ -92,13 +92,13 @@ public class info extends AppCompatActivity {
         nom.setText(etuitDAO.getByIdEtudiant(identifiant).getNom_etu());
         prenom.setText(etuitDAO.getByIdEtudiant(identifiant).getPre_etu());
         tel.setText(etuitDAO.getByIdEtudiant(identifiant).getTel_etu());
-        adresse.setText(etuitDAO.getByIdEtudiant(identifiant).getAdresse());
+        adresse.setText(etuitDAO.getByIdEtudiant(identifiant).getAdresse_etu());
         mail.setText(etuitDAO.getByIdEtudiant(identifiant).getMail_etu());
         classe.setText(etuitDAO.getByIdEtudiant(identifiant).getClasse_etu());
-        info.setText(etuitDAO.getByIdEtudiant(identifiant).getInfo_etu());
+        info.setText(etuitDAO.getByIdEtudiant(identifiant).getInfos_etu());
 
         nomE.setText(etuitDAO.getByIdEtudiant(identifiant).getNom_entreprise_etu());
-        adresseE.setText(etuitDAO.getByIdEtudiant(identifiant).getAdresse());
+        adresseE.setText(etuitDAO.getByIdEtudiant(identifiant).getAdresse_etu());
         cpE.setText(etuitDAO.getByIdEtudiant(identifiant).getCp_etu());
         villeE.setText(etuitDAO.getByIdEtudiant(identifiant).getVille_etu());
 
@@ -113,6 +113,7 @@ public class info extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(info.this, activity_2.class);
+                intent.putExtra("id", identifiant);
                 startActivity(intent);
             }
         });

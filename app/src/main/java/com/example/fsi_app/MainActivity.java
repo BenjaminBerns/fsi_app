@@ -1,11 +1,14 @@
 package com.example.fsi_app;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +27,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
     private Button buttonConnexion;
     private EtudiantDAO etuitDAO;
@@ -34,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText mdp;
     private Bilan1s lesnotes1;
     private Bilan2s lesnotes2;
+    private ArrayList<String> lesMdp;
+    private ArrayList<Etudiants> lesEtuSQL;
+    private ArrayList<Bilan1s> lesBil1SQL;
+    private ArrayList<Bilan2s> lesBil2SQL;
+    private ArrayList<Etudiants> lesEtu;
+    private ArrayList<Bilan1s> lesBil1;
+    private ArrayList<Bilan2s> lesBil2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,40 +59,15 @@ public class MainActivity extends AppCompatActivity {
         bilan1Dao.open();
         bilan2Dao = new Bilan2DAO(this);
         bilan2Dao.open();
+        initBdd();
         init();
-
     }
 
-    private void init(){
+    private void init() {
         //lien avec xml
         buttonConnexion = (Button) findViewById(R.id.button);
         identifiant = (EditText) findViewById(R.id.Identifiant);
         mdp = (EditText) findViewById(R.id.mdp);
-
-        //création d'étudiants pour simuler la bdd en dur puis création pour mysqlite
-        Etudiants Student1 = new Etudiants(1, "Berns", "Benjamin", "benjiberns@mail.fr", "9 rue des monts", "0768723210", "SLAM", "bberns", "mdp123", "lyon", "69000", "GrandLyon", "aucunes info supplémentaire","2SIO", "Yemisen", "Yemisen");
-        Etudiants Student2 = new Etudiants(2, "Baudoy", "Romain", "romain1105@gmail.com", "grange blanche", "0613558003", "SLAM", "rbauddoy", "mdp123", "LYON", "69000", "DCS", "aucunes info supplémentaire","2SIO", "DCSmaitreApprentissage", "DCStuteur");
-
-        Calendar laDate = new GregorianCalendar(2020,11,12);
-        Date ddj = laDate.getTime();
-        lesnotes1 = new Bilan1s(1, ddj, 12, 15, 10, "ouais pas mal", Student1);
-        lesnotes2 = new Bilan2s(1, ddj, "13", "16", "17", "très bien !!", Student2);
-
-        etuitDAO.insertEtudiant(Student1);
-        etuitDAO.insertEtudiant(Student2);
-        bilan1Dao.insertBilan1(lesnotes1);
-        bilan2Dao.insertBilan2(lesnotes2);
-
-        toutLesEtudiants = etuitDAO.getAllEtudiant();
-
-        //ajout dans la liste pour parcourir touts les étudiants dans la connexion
-        Etudiants[] LesEtudiants = new Etudiants[2];
-        LesEtudiants[0] = Student1;
-        LesEtudiants[1] = Student2;
-
-        Intent etu = new Intent(MainActivity.this, info.class);
-        etu.putExtra("listeEtudiants", LesEtudiants);
-
         buttonConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,18 +75,182 @@ public class MainActivity extends AppCompatActivity {
                 String user = identifiant.getText().toString();
                 String pass = mdp.getText().toString();
 
+                toutLesEtudiants = etuitDAO.getAllEtudiant();
+
                 //connexion avec informations
-                for (Etudiants lEtudiants : toutLesEtudiants ) {
-                    if (lEtudiants.getUsername_etu().equals(user)){
-                        if (lEtudiants.getPass_etu().equals(pass)){
-                            Intent intent = new Intent(MainActivity.this, activity_2.class);
-                            intent.putExtra("l'étudiant", lEtudiants.getId());
-                            startActivity(intent);
+                if (user.isEmpty()){
+                    Toast toast = Toast.makeText(MainActivity.this, "nom d'utilisateurs manquant !", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else if (pass.isEmpty()){
+                        Toast toast = Toast.makeText(MainActivity.this, "mot de passe manquant !", Toast.LENGTH_SHORT);
+                        toast.show();
+                }
+                else{
+                    for (Etudiants lEtudiants : toutLesEtudiants) {
+                        if (lEtudiants.getUsername_etu().equals(user)) {
+                            if (etuitDAO.getMdp(lEtudiants.getId()).equals(pass)) {
+                                Intent intent = new Intent(MainActivity.this, activity_2.class);
+                                intent.putExtra("id", lEtudiants.getId());
+                                startActivity(intent);
+                            }
                         }
                     }
                 }
             }
         });
+    }
+    public void initBdd () {
+        Call<ArrayList<String>> callMdp = retrofitE.getInstance().getMyApi().getMdp();
 
+        callMdp.enqueue(new Callback<ArrayList<String>>() {
+            @Override
+            public void onResponse(Call<ArrayList<String>> callMdp, Response<ArrayList<String>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    lesMdp = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<String>> callMdp, Throwable t) {
+                Log.d("Erreur", "Pas de Mdp");
+            }
+        });
+
+        Call<ArrayList<Etudiants>> callEtudiant = retrofitE.getInstance().getMyApi().getEtu();//On interroge notre API
+        callEtudiant.enqueue(new Callback<ArrayList<Etudiants>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Etudiants>> callEtudiant, Response<ArrayList<Etudiants>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    Log.d("Reponse", "Les étudiants ont bien été récupérés");
+                    lesEtuSQL = etuitDAO.getAllEtudiant();
+                    if (lesEtuSQL != null) {
+                        for (Etudiants etu : lesEtuSQL) {
+                            etuitDAO.deleteEtudiant(etu);
+                        }
+                    }
+                    else {
+                        Log.d("Reponse", "Aucun étudiant enregistré localement");
+                    }
+                    lesEtu = response.body();
+                    //Réinitialisation du competeur d'incrémentation :
+                    etuitDAO.remiseAZero();
+                    for(int i = 0; i < lesEtu.size(); i++) {
+
+                        etuitDAO.insertEtudiant(lesEtu.get(i), lesMdp.get(i));
+                    }
+                }
+                else{
+                    Log.d("Reponse", "Les étudiants n'ont pas été trouvés");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Etudiants>> callEtudiant, Throwable t) {
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+        Call<ArrayList<Bilan1s>> callBilan1s = retrofitE.getInstance().getMyApi().getBil1();
+        callBilan1s.enqueue(new Callback<ArrayList<Bilan1s>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Bilan1s>> call, Response<ArrayList<Bilan1s>> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    Log.d("Reponse", "Les Bilans 1 ont bien été trouvés");
+                    lesBil1SQL = bilan1Dao.getAllBilan1();
+                    if(lesBil1SQL != null){
+                        for(Bilan1s bil1 : lesBil1SQL){
+                            bilan1Dao.deleteBilan1(bil1);
+                        }
+                    }
+                    else {
+                        Log.d("Reponse", "Aucun Bilan1 enregistré localement");
+                    }
+                    lesBil1 = response.body();
+                }
+                else {
+
+                    Log.d("Reponse", "Les Bilans 1 n'ont pas été trouvés");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Bilan1s>> call, Throwable t) {
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+        Call<ArrayList<Etudiants>> callEtuBilan1 = retrofitE.getInstance().getMyApi().getEtuBil1();
+        callEtuBilan1.enqueue(new Callback<ArrayList<Etudiants>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Etudiants>> callEtuBilan1, Response<ArrayList<Etudiants>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Reponse", "Les étubil1 ont bien été trouvés");
+                    ArrayList<Etudiants> lesEtuBil1 = response.body();
+                    bilan1Dao.remiseAZero();
+                    for (int i = 0; i < lesBil1.size(); i++) {
+                        lesBil1.get(i).setEtuit(lesEtuBil1.get(i));
+                        bilan1Dao.insertBilan1(lesBil1.get(i));
+                    }
+                } else {
+                    Log.d("Reponse", "Les étudiants liés aux bilans 1 n'ont pas été trouvé");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Etudiants>> callEtuBilan1, Throwable t) {
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+
+        Call<ArrayList<Bilan2s>> callBilan2s = retrofitE.getInstance().getMyApi().getBil2();
+        callBilan2s.enqueue(new Callback<ArrayList<Bilan2s>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Bilan2s>> callBilan2s, Response<ArrayList<Bilan2s>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Reponse", "Les Bilans 2 ont bien été trouvés");
+                    lesBil2SQL = bilan2Dao.getAllBilan2();
+                    if (lesBil2SQL != null) {
+                        for (Bilan2s bil2 : lesBil2SQL) {
+                            bilan2Dao.deleteBilan2(bil2);
+                        }
+                    } else {
+                        Log.d("Reponse", "Aucun étudiant enregistré localement");
+                    }
+                    lesBil2 = response.body();
+                } else {
+
+                    Log.d("Reponse", "Les Bilans 2 n'ont pas été trouvés");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Bilan2s>> callBilan2s, Throwable t) {
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+        Call<ArrayList<Etudiants>> callEtuBilan2 = retrofitE.getInstance().getMyApi().getEtuBil2();
+        callEtuBilan2.enqueue(new Callback<ArrayList<Etudiants>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Etudiants>> callEtuBilan2, Response<ArrayList<Etudiants>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Reponse", "Les étudiants liés aux bilans 2 ont bien été trouvés");
+                    ArrayList<Etudiants> lesEtuBil1 = response.body();
+                    bilan2Dao.remiseAZero();
+                    for (int i = 0; i < lesBil2.size(); i++) {
+                        lesBil2.get(i).setEtuit(lesEtuBil1.get(i));
+                        bilan2Dao.insertBilan2(lesBil2.get(i));
+                    }
+                } else {
+                    Log.d("Reponse", "Les étudiants liés aux bilans 2 n'ont pas été trouvé");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Etudiants>> callEtuBilan2, Throwable t) {
+                Log.d("erreur", t.getMessage());
+            }
+        });
     }
 }
