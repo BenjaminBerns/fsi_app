@@ -77,6 +77,9 @@ public class Bilan1s {
         this.etuit = etuit;
     }
 
+
+
+
     public Bilan1s(){
 
     }

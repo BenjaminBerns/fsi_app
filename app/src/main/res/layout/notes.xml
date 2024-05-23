@@ -133,7 +133,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="75dp"
                 android:layout_marginTop="290dp"
-                android:text="Note :" />
+                android:text="Moyenne :" />
 
             <TextView
                 android:id="@+id/noteDossTitre"
@@ -253,7 +253,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="75dp"
                 android:layout_marginTop="745dp"
-                android:text="Note :" />
+                android:text="Moyenne :" />
 
             <TextView
                 android:id="@+id/noteDossTitre2"

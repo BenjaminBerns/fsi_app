@@ -8,16 +8,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fsi_app.Model.BO.Bilan1s;
 import com.example.fsi_app.Model.BO.Bilan2s;
-import com.example.fsi_app.Model.BO.Etudiants;
 import com.example.fsi_app.Model.DAO.Bilan1DAO;
 import com.example.fsi_app.Model.DAO.Bilan2DAO;
 import com.example.fsi_app.Model.DAO.EtudiantDAO;
@@ -43,6 +40,10 @@ public class notes extends AppCompatActivity {
     private Bilan2s bil2;
     private Date dateBil1;
     private Date dateBil2;
+    private double noted;
+    private double noteo;
+    private double noted2;
+    private double noteo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,24 @@ public class notes extends AppCompatActivity {
 
     }
 
+    private Object getavg1() {
+        noted = bil1.getNote_doss_bil1();
+        noteo = bil1.getNote_oral_bil1();
+        double resultat = (noted + noteo)/2;
+        return resultat;
+    }
+
+    private Object getavg2() {
+        noted2 = bil2.getNote_doss_bil2();
+        noteo2 = bil2.getNote_oral_bil2();
+        double resultat = (noted2 + noteo2)/2;
+        return resultat;
+    }
+
     private void init() {
+
+
+
         buttonbck = (Button) findViewById(R.id.btnb2);
         deco = (Button) findViewById(R.id.deconnexion2);
 
@@ -102,7 +120,7 @@ public class notes extends AppCompatActivity {
 
         //String noteEntBil1 = lesnotes1.getNote_ent_bil1();
         //tv2.setText(noteEntBil1);
-        tv2.setText(" ");
+        tv2.setText(String.valueOf(getavg1()));
 
         //String noteDosBil1 = lesnotes1.getNote_doss_bil1();
         //tv3.setText(noteDosBil1);
@@ -122,7 +140,7 @@ public class notes extends AppCompatActivity {
         dateBil2 = new Date(bil2.getDate_bil2().getTime());
         tv6.setText(DateFormat.getDateInstance(DateFormat.LONG, locale).format(dateBil2));
 
-        tv7.setText(" ");
+        tv7.setText(String.valueOf(getavg2()));
 
         //String noteDosBil2 = lesnotes2.getNote_doss_bil2();
         //tv8.setText(noteDosBil2);

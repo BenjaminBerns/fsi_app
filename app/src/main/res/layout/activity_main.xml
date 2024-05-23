@@ -35,7 +35,10 @@
         android:layout_marginStart="65dp"
         android:layout_marginTop="27dp"
         android:ems="10"
+        android:importantForAccessibility="auto"
         android:inputType="text"
+        android:password="true"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Identifiant" />
 
